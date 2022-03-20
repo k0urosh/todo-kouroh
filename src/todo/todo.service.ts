@@ -58,11 +58,33 @@ export class TodoService {
           return singleTodoItem
     }
 
-    async delete(todoId: number): Promise<TodoDto> {
+    async delete(todoId: number){
         const singleTodoItem = await this.findOne(todoId)
 
-        const deletedTodoItem = await singleTodoItem.destroy()
+        const todoUpdatedInformation: TodoDto = {
+            "is_delete": true
+        }
 
-        return singleTodoItem
+        await singleTodoItem.update(todoUpdatedInformation)
+
+        const returnInformation = {
+            data: singleTodoItem, 
+            message: "Successfully set todo: " + singleTodoItem.id + " as deleted"
+        }
+
+        return returnInformation
+    }
+
+    async fullDelete(todoId: number){
+        const singleTodoItem = await this.findOne(todoId)
+
+        await singleTodoItem.destroy()
+
+        const returnInformation = {
+            data: singleTodoItem, 
+            message: "Successfully deleted todo: " + todoId
+        }
+
+        return returnInformation
     }
 }
