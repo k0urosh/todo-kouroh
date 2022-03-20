@@ -10,19 +10,30 @@ export class TodoService {
         private todoModel: typeof todo
     ) {}
 
-    async create(todoDto: TodoDto): Promise<TodoDto> {
-        return await this.todoModel.create({...todoDto});
+    async create(todoDto: TodoDto) {
+        
+        const newTodo = await this.todoModel.create({...todoDto});
+
+        const returnInformation = {
+            data: newTodo, 
+            message: "Successfully created new todo item: " + newTodo.id
+        }
+        return returnInformation
     }
 
-    async update(todoId: number,todoDto: TodoDto): Promise<TodoDto> {
+    async update(todoId: number,todoDto: TodoDto) {
         const singleTodoItem = await this.findOne(todoId)
 
         const updatedTodoItem = await singleTodoItem.update(todoDto)
 
-        return updatedTodoItem
+        const returnInformation = {
+            data: updatedTodoItem, 
+            message: "Successfully updated todo item: " + todoId
+        }
+        return returnInformation
     }
 
-    async markTodoAsCompleted(todoId: number): Promise<TodoDto> {
+    async markTodoAsCompleted(todoId: number) {
         const singleTodoItem = await this.findOne(todoId)
 
         const todoUpdatedInformation: TodoDto = {
@@ -30,18 +41,33 @@ export class TodoService {
         }
         const updatedTodoItem = await singleTodoItem.update(todoUpdatedInformation)
 
-        return updatedTodoItem
+        const returnInformation = {
+            data: updatedTodoItem, 
+            message: "Successfully marked todo item: " + todoId + " as complete"
+        }
+
+        return returnInformation
     }
 
     async getTodoList(){
         const todoList:todo[] = await this.findAll() 
         .catch(error => { throw error})
 
-        return todoList
+
+        const returnInformation = {
+            data: todoList, 
+            message: "Successfully retrieved todo list"
+        }
+        
+        return returnInformation
     }
 
     async findAll(): Promise<todo[]> {
-        const todoList:todo[] = await this.todoModel.findAll()
+        const todoList:todo[] = await this.todoModel.findAll({
+            where:{
+                is_delete: false
+            }
+        })
         .catch(error => { throw error})
 
         return todoList
