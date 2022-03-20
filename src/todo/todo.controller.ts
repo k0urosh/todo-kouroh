@@ -44,15 +44,27 @@ export class TodoController {
         return this.todoService.getTodoList();
     }
 
-    @Delete('delete/:id')
-    public async remove(@Param('id') todoId: number) {
+    @Put('delete/:id')
+    public async delete(@Param('id') todoId: number) {
       const result = await this.todoService.delete(todoId)
      
       if (!result) {
         throw new HttpException('Not deleted succesfully, result is empty', HttpStatus.BAD_REQUEST);
       }
   
-      return result;    }
+      return result;    
+    }
+
+    @Delete('delete/permanent/:id')
+    public async fullDelete(@Param('id') todoId: number) {
+      const result = await this.todoService.fullDelete(todoId)
+     
+      if (!result) {
+        throw new HttpException('Not deleted succesfully, result is empty', HttpStatus.BAD_REQUEST);
+      }
+  
+      return result;    
+    }
 
    
 }

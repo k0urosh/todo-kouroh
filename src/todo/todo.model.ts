@@ -1,4 +1,4 @@
-import { Column, CreatedAt, HasMany, HasOne, Model, Table, UpdatedAt } from 'sequelize-typescript';
+import { Column, CreatedAt, Default, HasMany, HasOne, Model, Table, UpdatedAt } from 'sequelize-typescript';
 
 @Table
 export class todo extends Model {
@@ -7,6 +7,10 @@ export class todo extends Model {
   
   @Column
   status!: boolean;
+
+  @Column
+  @Default(false)
+  is_delete!: boolean;
 
   @Column
   @CreatedAt
