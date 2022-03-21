@@ -50,7 +50,7 @@ export class TodoService {
     }
 
     async getTodoList(){
-        const todoList:todo[] = await this.findAll() 
+        const todoList:TodoDto[] = await this.findAll() 
         .catch(error => { throw error})
 
 
@@ -62,7 +62,7 @@ export class TodoService {
         return returnInformation
     }
 
-    async findAll(): Promise<todo[]> {
+    async findAll(): Promise<TodoDto[]> {
         const todoList:todo[] = await this.todoModel.findAll({
             where:{
                 is_delete: false
