@@ -8,8 +8,8 @@ export class AppService {
     }
 
     return {
-      message: 'User information:',
-      user: req.user
+      message: 'User access token:',
+      user: req.user.accessToken
     }
   }
 }

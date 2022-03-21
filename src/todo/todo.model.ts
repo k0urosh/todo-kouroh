@@ -3,20 +3,20 @@ import { Column, CreatedAt, Default, HasMany, HasOne, Model, Table, UpdatedAt } 
 @Table
 export class todo extends Model {
   @Column
-  description!: string;
+  description?: string;
   
   @Column
-  status!: boolean;
+  status?: boolean;
 
-  @Column
   @Default(false)
-  is_delete!: boolean;
+  @Column
+  is_delete?: boolean;
 
   @Column
   @CreatedAt
-  created_at!: Date;
+  created_at?: Date;
 
   @Column
   @UpdatedAt
-  updated_at!: Date;
+  updated_at?: Date;
 }
