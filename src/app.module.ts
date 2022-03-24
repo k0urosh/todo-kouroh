@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GoogleStrategy } from './Authentication/google.strategy';
+import { GoogleStrategy } from './auth/google.strategy';
 import { TodoModule } from './todo/todo.module';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
 
 
 @Module({
@@ -18,6 +20,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
     autoLoadModels: true,
     synchronize: true,
   }),
+  AuthModule,
   TodoModule
   ],
   controllers: [AppController],

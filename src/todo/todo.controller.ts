@@ -1,12 +1,14 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { TodoDto } from './dto/todo.dto';
 import { TodoService } from './todo.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('todo')
 export class TodoController {
     constructor(private readonly todoService: TodoService) {}
 
-     @Post('create')
+    @UseGuards(JwtAuthGuard)
+    @Post('create')
      public async createTodo(@Body() todoDto: TodoDto){
      const result = await this.todoService.create(todoDto)
      
@@ -17,7 +19,8 @@ export class TodoController {
      return result;
    }
 
-     @Put('update/:id')
+    @UseGuards(JwtAuthGuard)
+    @Put('update/:id')
      public async updateTodo(@Param('id') todoId: number, @Body() todoDto: TodoDto){
      const result = await this.todoService.update(todoId, todoDto)
      
@@ -28,6 +31,7 @@ export class TodoController {
      return result;
    }
 
+   @UseGuards(JwtAuthGuard)
    @Put('completed/:id')
     public async markTodoAsCompleted(@Param('id') todoId: number){
     const result = await this.todoService.markTodoAsCompleted(todoId)
@@ -39,11 +43,13 @@ export class TodoController {
     return result;
    }
     
-    @Get()
+    @UseGuards(JwtAuthGuard)
+    @Get('list')
     public async getAllTodo() {
         return this.todoService.getTodoList();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('delete/:id')
     public async delete(@Param('id') todoId: number) {
       const result = await this.todoService.delete(todoId)
@@ -55,6 +61,7 @@ export class TodoController {
       return result;    
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete('delete/permanent/:id')
     public async fullDelete(@Param('id') todoId: number) {
       const result = await this.todoService.fullDelete(todoId)
@@ -65,6 +72,5 @@ export class TodoController {
   
       return result;    
     }
+  }
 
-   
-}
