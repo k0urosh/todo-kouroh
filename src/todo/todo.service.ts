@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { TodoDto } from './dto/todo.dto';
 import { todo } from './todo.model';
@@ -23,6 +23,10 @@ export class TodoService {
 
     async update(todoId: number,todoDto: TodoDto) {
         const singleTodoItem = await this.findOne(todoId)
+        
+        if(!singleTodoItem){
+            throw new HttpException('Todo item of id: ' + todoId + " does not exist!", HttpStatus.BAD_REQUEST);
+        }
 
         const updatedTodoItem = await singleTodoItem.update(todoDto)
 
@@ -87,6 +91,10 @@ export class TodoService {
     async delete(todoId: number){
         const singleTodoItem = await this.findOne(todoId)
 
+        if(!singleTodoItem){
+            throw new HttpException('Todo item of id: ' + todoId + " does not exist!", HttpStatus.BAD_REQUEST);
+        }
+
         const todoUpdatedInformation: TodoDto = {
             "is_delete": true
         }
@@ -103,6 +111,10 @@ export class TodoService {
 
     async fullDelete(todoId: number){
         const singleTodoItem = await this.findOne(todoId)
+
+        if(!singleTodoItem){
+            throw new HttpException('Todo item of id: ' + todoId + " does not exist!", HttpStatus.BAD_REQUEST);
+        }
 
         await singleTodoItem.destroy()
 
