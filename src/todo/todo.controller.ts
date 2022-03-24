@@ -50,6 +50,12 @@ export class TodoController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @Get('list/:id')
+    public async getSpecificTodo(@Param('id') todoId: number) {
+        return this.todoService.findOne(todoId);
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Put('delete/:id')
     public async delete(@Param('id') todoId: number) {
       const result = await this.todoService.delete(todoId)
