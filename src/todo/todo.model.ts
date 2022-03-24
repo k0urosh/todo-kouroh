@@ -5,6 +5,7 @@ export class todo extends Model {
   @Column
   description?: string;
   
+  @Default(false)
   @Column
   status?: boolean;
 
