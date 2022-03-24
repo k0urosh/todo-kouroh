@@ -1,7 +1,6 @@
 import { TodoDto } from './dto/todo.dto';
 import { TodoController } from './todo.controller';
 import { todo } from './todo.model';
-import { TodoModule } from './todo.module';
 import { TodoService } from './todo.service';
 
 describe('TodoController', () => {

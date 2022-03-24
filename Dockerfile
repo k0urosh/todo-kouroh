@@ -1,6 +1,7 @@
-FROM node:17.7.2 AS development
+FROM node:14.17.4 AS local
 WORKDIR /usr/src/app
 COPY package*.json ./
+RUN npm install
 RUN npm install glob rimraf
 RUN npm install --only=development
 COPY . .

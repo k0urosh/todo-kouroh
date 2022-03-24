@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-    dev:
+    local:
         container_name: todo-kourosh
         image: todo-kourosh:1.0.0
         build:
